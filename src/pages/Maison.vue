@@ -4,7 +4,5 @@
 </script>
 <template>
     Test
-    <Data>
-        
-    </Data>
+    <Login />
 </template>
