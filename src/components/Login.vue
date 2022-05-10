@@ -1,6 +1,13 @@
 <script setup lang="ts">
 import EyeOpen from "~icons/ph/eye-light";
 import EyeClose from "~icons/ph/eye-slash";
+import AccountIcon from '~icons/mdi/account-circle'
+import { useApi } from '../composables/useApi'
+import router from "@/router";
+import { resolve } from "path";
+
+const { t } = useI18n()
+
 
 const email = ref();
 const hidePassword = ref(true);
@@ -11,39 +18,24 @@ const passwordFieldType = computed(() =>
   hidePassword.value ? "password" : "text"
 );
 
-function connect() {
-  fetch('http://localhost:3000/lanistes?email='+ email.value + '&password=' + password.value, {
-    method: "GET",
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        alert(
-          "Server returned " + response.status + " : " + response.statusText
-        );
-      }
+const { connect } = useApi()
+
+async function log() { 
+  const id = ref()
+  async function promise() {
+    return new Promise(() => {
+      id.value = connect(email.value,password.value)
     })
-    .then((response) => {
-      console.log(response[0])
-      if(response[0] != undefined) {
-        id.value = response[0].id;
-        alert(id.value)
-      }
-      else{
-        alert("Identifiants invalides")
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  }
+  promise().then(() => {router.push('/' + id.value)})
 }
 </script>
 <template>
   <div id="login">
     <div id="form">
-      <form @submit.prevent="connect">
-        <label for="email">Email</label>
+    <h1 class="">{{ t('login') }}</h1>
+      <form @submit.prevent="log">
+        <label for="email">{{ t('email') }}</label>
         <input
           type="text"
           id="email"
@@ -52,14 +44,14 @@ function connect() {
           autocomplete="off"
         />
 
-        <label for="password">Password</label>
+        <label for="password">{{ t('password') }}</label>
 
         <div class="flex flex-row">
           <input
             :type="passwordFieldType"
             id="password"
             v-model="password"
-            placeholder="Password"
+            :placeholder="t('password')"
           />
           <div
             @click="
@@ -74,7 +66,7 @@ function connect() {
           </div>
         </div>
 
-        <button type="submit">Log in</button>
+        <button type="submit">{{ t('log-in') }}</button>
       </form>
     </div>
   </div>

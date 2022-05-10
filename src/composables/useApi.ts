@@ -1,7 +1,39 @@
 import { json } from "stream/consumers";
 
 export function useApi() {
+
+  const id = ref()
+
+  async function connect(email:String, password:String): Promise<number> {
+    fetch('http://localhost:3000/lanistes?email='+ email + '&password=' + password, {
+      method: "GET",
+    })
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          alert(
+            "Server returned " + response.status + " : " + response.statusText
+          );
+        }
+      })
+      .then((response) => {
+        if(response[0] != undefined) {
+          id.value = response[0].id;
+          alert(id.value)
+        }
+        else{
+          alert("Identifiants invalides")
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+      return id.value
+  }
+
   const ludis = ref();
+  const ludi = ref()
 
   async function getLudi(id: String) {
     fetch("http://localhost:3000/ludis?id=" + id, {
@@ -19,7 +51,9 @@ export function useApi() {
       .then((response) => {
         console.log(id);
         if (response[0] != undefined) {
-          return response;
+          ludi.value = response[0];
+          console.log(ludi.value)
+          console.log(response[0])
         } else {
           alert("id incorrect");
         }
@@ -27,6 +61,7 @@ export function useApi() {
       .catch((err) => {
         console.log(err);
       });
+      return ludi.value
   }
 
   async function getLudis(lanisteId: String) {
@@ -203,6 +238,7 @@ export function useApi() {
   }
 
   return {
+    connect,
     getLudi,
     getLudis,
     getAllLudis,

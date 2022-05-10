@@ -14,3 +14,5 @@ Since TypeScript cannot handle type information for `.vue` imports, they are shi
 2. Reload the VS Code window by running `Developer: Reload Window` from the command palette.
 
 You can learn more about Take Over mode [here](https://github.com/johnsoncodehk/volar/discussions/471).
+
+Pour utiliser le projet il faut aller sur localhost:3001/ (après avoir lancé l'api), vous pourrez voir la page de login qui arrive bien à trouver l'id laniste lorsque l'email et mot de passe sont correctes mais je n'ai pas réussis à faire marcher le router push dans le temps imparti, il faut donc aller sur localhost:3001/1 pour voir le ludi du profil

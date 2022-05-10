@@ -10,6 +10,8 @@ const props = defineProps({
 
 const { postLudi, getIdOfLastLudi } = useApi();
 
+const { t } = useI18n()
+
 const nom = ref();
 const specialite = ref();
 
@@ -28,22 +30,22 @@ async function createLudi() {
 <template>
   <div>
     <div id="form">
-      <form>
-        <h2>Créer un Ludi</h2>
-        <label for="nom">Nom</label>
+      <form @submit.prevent="createLudi">
+        <h2>{{ t('creer-un-ludi') }}</h2>
+        <label for="nom">{{t('nom')}}</label>
         <input
           type="text"
           id="email"
-          placeholder="Nom"
+          :placeholder="t('nom')"
           v-model="nom"
           autocomplete="off"
         />
 
-        <label for="specialite">Specialité</label>
+        <label for="specialite">{{ t('specialite') }} </label>
         <input
           type="text"
           id="specialite"
-          placeholder="Spécialité"
+          :placeholder="t('specialite')"
           v-model="specialite"
           autocomplete="off"
         />
@@ -52,7 +54,7 @@ async function createLudi() {
           @click="createLudi()"
           @click.prevent="$emit('close')"
         >
-          Créer
+          {{t('creer')}}
         </button>
       </form>
     </div>

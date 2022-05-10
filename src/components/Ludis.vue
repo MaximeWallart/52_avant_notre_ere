@@ -24,6 +24,7 @@ const TogglePopup = () => {
 };
 
 onMounted(async () => {
+  console.log(props.lanisteId)
   ludis.value = await getLudis(props.lanisteId);
 });
 </script>
@@ -35,14 +36,14 @@ onMounted(async () => {
       </li>
     </div>
 
-    <li class="ludi">
+    <!-- <li class="ludi">
       <div
         class="bg-[#AB8036] text-white w-1/4 rounded-lg h-24 w-24 relative m-1"
         @click="TogglePopup"
       >
         <PlusIcon class="absolute top-1/3 right-8 text-2xl" />
       </div>
-    </li>
+    </li> -->
   </ul>
   <Popup
     v-if="popupTrigger"
