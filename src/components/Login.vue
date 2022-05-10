@@ -81,6 +81,7 @@ function connect() {
 </template>
 <style>
 div#app div#login {
+  position: absolute;
   align-items: center;
   display: flex;
   justify-content: center;
